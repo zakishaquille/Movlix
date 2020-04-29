@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { FlatList, Image, TouchableWithoutFeedback, SafeAreaView, View } from 'react-native';
-import { Card, CardItem, Text, Body, Left, Right, Badge } from 'native-base';
+import { Card, CardItem, Text, Body, Left, Right, Badge, Spinner, Item, Input, Icon } from 'native-base';
 import Axios from 'axios';
 import { BASE_URL_IMG, API_KEY, TV } from '@api/constants';
+import { convertDate } from '@api/helpers';
 import { styles } from '../components/indexStyle';
 
 class Home extends Component {
@@ -76,7 +77,7 @@ class Home extends Component {
             <Left>
               <Body>
                 <Text style={styles.title}>{item.name}</Text>
-                <Text style={styles.note} note>{item.first_air_date}</Text>
+                <Text style={styles.note} note>{convertDate(item.first_air_date)}</Text>
               </Body>
             </Left>
             <Right>
@@ -94,15 +95,7 @@ class Home extends Component {
     if (!this.state.isLoading) return null;
 
     return (
-      <View
-        style={{
-          paddingVertical: 20,
-          borderTopWidth: 1,
-          borderColor: "#CED0CE"
-        }}
-      >
-        <Text>Loading...</Text>
-      </View>
+      <Spinner />
     );
   };
 
@@ -117,6 +110,12 @@ class Home extends Component {
           onRefresh={this.handleRefresh}
           onEndReached={this.handleLoadMore}
           onEndReachedThreshold={0.5}
+          ListHeaderComponent={() => (
+            <Item rounded style={styles.searchInput}>
+              <Input style={styles.input} placeholder='Search here...'/>
+              <Icon name='search' />
+            </Item>
+          )}
           ListFooterComponent={this.renderFooter}
         />
       </SafeAreaView>

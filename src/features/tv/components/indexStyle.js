@@ -2,10 +2,10 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 10,
     paddingLeft: 15,
     paddingRight: 15,
-    flex: 1
+    flex: 1,
+    backgroundColor: 'white'
   },
   card: {
     fontFamily: "Roboto",
@@ -26,15 +26,16 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto",
     fontSize: 12
   },
-  search: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    borderRadius: 25,
+  searchInput: {
+    paddingHorizontal: 15,
     backgroundColor: '#DFDFDF',
     opacity: 0.4,
+    marginTop: 10,
     marginBottom: 20
+  },
+  input: {
+    fontFamily: "Roboto",
+    fontSize: 13
   },
 })
 
