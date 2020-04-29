@@ -91,14 +91,6 @@ class Home extends Component {
     );
   }
 
-  renderFooter = () => {
-    if (!this.state.isLoading) return null;
-
-    return (
-      <Spinner />
-    );
-  };
-
   render() {
     return(
       <SafeAreaView style={styles.container}>
@@ -116,7 +108,7 @@ class Home extends Component {
               <Icon name='search' />
             </Item>
           )}
-          ListFooterComponent={this.renderFooter}
+          ListFooterComponent={this.state.isLoading ? <Spinner /> : null}
         />
       </SafeAreaView>
     );
