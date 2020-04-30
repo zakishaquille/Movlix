@@ -14,6 +14,7 @@ class Home extends Component {
       isLoading: true,
       isRefreshing: false,
       isEndItem: false,
+      isSearching: false,
       page: 1,
       keyword: '',
       data: []
@@ -42,6 +43,25 @@ class Home extends Component {
     });
   }
 
+  getSearchTv = () => {
+    let params = {
+      api_key: API_KEY,
+      page: this.state.page,
+      query: this.state.keyword
+    };
+
+    Axios.get(TV.SEARCH, {params: params}).then((response) => {
+      this.setState({
+        data: [...this.state.data, ...response.data.results],
+        isLoading: false,
+        isRefreshing: false
+      });
+    }).catch(err => {
+      console.log(`GET SEARCH TV: ${JSON.stringify(err.response)}`)
+      this.setState({ isLoading: false, isRefreshing: false, isEndItem: true });
+    });
+  }
+
   handleRefresh = () => {
     this.setState({
         page: 1,
@@ -49,7 +69,8 @@ class Home extends Component {
         isRefreshing: true,
         isEndItem: false
     }, () => {
-        this.getTvPopular();
+      if(this.state.isSearching) this.getSearchTv();
+      else this.getTvPopular();
     })
   }
 
@@ -65,6 +86,22 @@ class Home extends Component {
       );
     }
   };
+
+  handleSearch(x) {
+    if(this._timeout){
+      clearTimeout(this._timeout);
+    }
+
+    this._timeout = setTimeout(()=>{
+      this._timeout = null;
+      let isSearching = x == '' ? false : true;
+
+        this.setState({ keyword: x, isSearching: isSearching }, () => {
+          this.handleRefresh()
+        })
+    }, 300);
+  }
+
 
   cardItem = item => {
     return (
@@ -94,6 +131,12 @@ class Home extends Component {
   render() {
     return(
       <SafeAreaView style={[styles.container, styles.padder]}>
+        <View>
+          <Item rounded style={styles.searchInput}>
+            <Input style={styles.input} placeholder='Search here...' onChangeText={(x) => this.handleSearch(x)}/>
+            <Icon name='search' />
+          </Item>
+        </View>
         <FlatList
           keyExtractor={item => item.id.toString()}
           data={this.state.data}
@@ -102,12 +145,6 @@ class Home extends Component {
           onRefresh={this.handleRefresh}
           onEndReached={this.handleLoadMore}
           onEndReachedThreshold={0.5}
-          ListHeaderComponent={() => (
-            <Item rounded style={styles.searchInput}>
-              <Input style={styles.input} placeholder='Search here...'/>
-              <Icon name='search' />
-            </Item>
-          )}
           ListFooterComponent={this.state.isLoading ? <Spinner /> : null}
         />
       </SafeAreaView>

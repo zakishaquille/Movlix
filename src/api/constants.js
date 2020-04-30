@@ -4,6 +4,7 @@ const API_KEY = 'f9ceb2acb26e295906c73fff575af734';
 
 const TV = {
   POPULAR: `${BASE_URL}/tv/popular`,
+  SEARCH: `${BASE_URL}/search/tv`,
   DETAIL: `${BASE_URL}/tv`,
 }
 
