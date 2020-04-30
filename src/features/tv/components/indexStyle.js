@@ -2,10 +2,12 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: 15,
-    paddingRight: 15,
     flex: 1,
     backgroundColor: 'white'
+  },
+  padder: {
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   card: {
     fontFamily: "Roboto",
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15
   },
   title: {
-    fontFamily: "Roboto_Bold",
+    fontFamily: "Roboto_Bold"
   },
   note: {
     fontFamily: "Roboto",

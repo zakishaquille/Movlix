@@ -5,4 +5,9 @@ const convertDate = (stringDate) => {
   return moment(date).format('ll');
 }
 
-export { convertDate }
+const getYear = (stringDate) => {
+  const date = new Date(stringDate)
+  return moment(date).format('YYYY');
+}
+
+export { convertDate, getYear }

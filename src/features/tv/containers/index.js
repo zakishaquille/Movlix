@@ -93,7 +93,7 @@ class Home extends Component {
 
   render() {
     return(
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, styles.padder]}>
         <FlatList
           keyExtractor={item => item.id.toString()}
           data={this.state.data}
